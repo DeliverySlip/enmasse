@@ -86,7 +86,7 @@ fun main(params: Array<String>){
 
         if(useCache){
             inboxList.forEach{
-                if(it.body.contains(query!!) || it.subject.contains(query, ignoreCase = true)){
+                if(Searcher.messageCointainsKey(it, query!!)){
                     matchingMessages.add(it)
                 }
             }
@@ -114,16 +114,10 @@ fun main(params: Array<String>){
                         inboxList.add(retrievedMessage)
                     }
 
-                    if(retrievedMessage.body != null){
-                        if(retrievedMessage.body.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
+                    if(Searcher.messageCointainsKey(retrievedMessage, query!!)){
+                        matchingMessages.add(retrievedMessage)
                     }
-                    if(retrievedMessage.subject != null){
-                        if(retrievedMessage.subject.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
-                    }
+
                     return@execute
                 }
             }
@@ -138,7 +132,7 @@ fun main(params: Array<String>){
 
         if(useCache){
             sentList.forEach{
-                if(it.body.contains(query!!) || it.subject.contains(query, ignoreCase = true)){
+                if(Searcher.messageCointainsKey(it, query!!)){
                     matchingMessages.add(it)
                 }
             }
@@ -166,16 +160,10 @@ fun main(params: Array<String>){
                         sentList.add(retrievedMessage)
                     }
 
-                    if(retrievedMessage.body != null){
-                        if(retrievedMessage.body.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
+                    if(Searcher.messageCointainsKey(retrievedMessage, query!!)){
+                        matchingMessages.add(retrievedMessage)
                     }
-                    if(retrievedMessage.subject != null){
-                        if(retrievedMessage.subject.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
-                    }
+
                     return@execute
                 }
             }
@@ -191,7 +179,7 @@ fun main(params: Array<String>){
 
         if(useCache){
             draftList.forEach{
-                if(it.body.contains(query!!) || it.subject.contains(query, ignoreCase = true)){
+                if(Searcher.messageCointainsKey(it, query!!)){
                     matchingMessages.add(it)
                 }
             }
@@ -218,16 +206,10 @@ fun main(params: Array<String>){
                         draftList.add(retrievedMessage)
                     }
 
-                    if(retrievedMessage.body != null){
-                        if(retrievedMessage.body.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
+                    if(Searcher.messageCointainsKey(retrievedMessage, query!!)){
+                        matchingMessages.add(retrievedMessage)
                     }
-                    if(retrievedMessage.subject != null){
-                        if(retrievedMessage.subject.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
-                    }
+
                     return@execute
                 }
             }
@@ -243,7 +225,7 @@ fun main(params: Array<String>){
 
         if(useCache){
             trashList.forEach{
-                if(it.body.contains(query!!) || it.subject.contains(query, ignoreCase = true)){
+                if(Searcher.messageCointainsKey(it, query!!)){
                     matchingMessages.add(it)
                 }
             }
@@ -270,16 +252,10 @@ fun main(params: Array<String>){
                         trashList.add(retrievedMessage)
                     }
 
-                    if(retrievedMessage.body != null){
-                        if(retrievedMessage.body.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
+                    if(Searcher.messageCointainsKey(retrievedMessage, query!!)){
+                        matchingMessages.add(retrievedMessage)
                     }
-                    if(retrievedMessage.subject != null){
-                        if(retrievedMessage.subject.contains(query!!, ignoreCase = true)){
-                            matchingMessages.add(retrievedMessage)
-                        }
-                    }
+
                     return@execute
                 }
             }
