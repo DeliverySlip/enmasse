@@ -1,3 +1,5 @@
+package lib
+
 import com.securemessaging.Message
 
 object Searcher {
