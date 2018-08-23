@@ -44,7 +44,7 @@ or overwritten everytime the `--CACHEDATA` flag is passed in terminal or checked
 
 By passing `--USECACHE` or checking the box in the GUI, EnMasse will read and deserialize
 this file and use it to make its searches. With the `--USECACHE` flag or checkbox selected,
-EnMasse will *only query the api if the following issues occur*:
+EnMasse will **only query the api if the following issues occur**:
 * The service code does not match the service the cached emails belong to
 * EnMasse fails to deserialize the `enmasse.cache.dat` file
 * The `enmasse.cache.dat` file does not exist
@@ -52,8 +52,8 @@ EnMasse will *only query the api if the following issues occur*:
 In these cases, EnMasse runs as if the flag was not provided, as it cannot run without the
 cache file while in this mode.
 
-*Note that the cached data is not encrypted and thus stores your email information on your
-local machine in serialized plaintext*. To mitigate unwanted access to these emails, either
+**Note that the cached data is not encrypted and thus stores your email information on your
+local machine in serialized plaintext**. To mitigate unwanted access to these emails, either
 do not use the `--CACHEDATA` parameter or delete the cache data when done with searches.
 
 If you are having issues with the cache, one of the easiest solutions is to simply delete
