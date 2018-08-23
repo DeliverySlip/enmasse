@@ -14,6 +14,7 @@ class Executor {
     companion object {
 
         fun execute(configuration: Configuration):SearchResults{
+            println("Executor Now Running")
 
             val serviceCode = configuration.serviceCode
             val username = configuration.username
@@ -28,10 +29,12 @@ class Executor {
             val trashList = ArrayList<Message>()
 
             if(useCache){
-                val localStorage = CacheManager().getCachedData()
+                val localStorage = CacheManager().getCachedData(serviceCode)
                 if(localStorage == null){
+                    println("Caching Data Could Not Be Retrieved. Disabling Use Of Cache")
                     configuration.useCache = false
                 }else{
+                    println("Loading Caching Data")
                     inboxList.clear()
                     inboxList.addAll(localStorage.inbox)
                     sentList.clear()
@@ -266,7 +269,7 @@ class Executor {
             if(configuration.cacheResults){
                 println("Cache Results Detected. Caching Data")
                 val localStorage = LocalStorage(inboxList, sentList, draftList, trashList)
-                CacheManager().cacheData(localStorage)
+                CacheManager().cacheData(localStorage, serviceCode)
             }
 
             return SearchResults(matchingMessages, inboxList, draftList, sentList, trashList)
