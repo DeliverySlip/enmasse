@@ -78,11 +78,10 @@ class Executor {
                     //fetch all inbox messages
                     val inboxSearchFilter = SearchMessagesFilter()
                     inboxSearchFilter.messageBoxType = MessageBoxType.INBOX
+                    inboxSearchFilter.pageSize = 100
                     val inboxSearchResults = messenger.searchMessages(inboxSearchFilter)
 
                     println("Spawning Inbox Executor")
-                    //val executor = Executors.newFixedThreadPool(5)
-
                     val iterator = inboxSearchResults.iterator()
                     while(iterator.hasNext()){
                         val message = iterator.next()
@@ -124,6 +123,7 @@ class Executor {
                     //fetch all sent messages
                     val sentSearchFilter = SearchMessagesFilter()
                     sentSearchFilter.messageBoxType = MessageBoxType.SENT
+                    sentSearchFilter.pageSize = 100
                     val sentSearchResults = messenger.searchMessages(sentSearchFilter)
 
                     println("Spawning Sent Executor")
@@ -171,6 +171,7 @@ class Executor {
                     //fetch all draft messages
                     val draftSearchFilter = SearchMessagesFilter()
                     draftSearchFilter.messageBoxType = MessageBoxType.DRAFT
+                    draftSearchFilter.pageSize = 100
                     val draftSearchResults = messenger.searchMessages(draftSearchFilter)
 
                     println("Spawning Draft Executor")
@@ -217,6 +218,7 @@ class Executor {
                     //fetch all trash messages
                     val trashSearchFilter = SearchMessagesFilter()
                     trashSearchFilter.messageBoxType = MessageBoxType.TRASH
+                    trashSearchFilter.pageSize = 100
                     val trashSearchResults = messenger.searchMessages(trashSearchFilter)
 
                     println("Spawning Trash Executor")
