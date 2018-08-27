@@ -5,6 +5,8 @@ import application.models.Message
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.value.ObservableBooleanValue
+import javafx.geometry.Orientation
+import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
 import lib.Configuration
 import lib.enum.OutputType
@@ -25,6 +27,12 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
     val cacheResults = SimpleBooleanProperty(true)
     val useCache = SimpleBooleanProperty(false)
 
+    val absoluteMatch = SimpleBooleanProperty(false)
+    val caseSensitive = SimpleBooleanProperty(false)
+    val searchSubject = SimpleBooleanProperty(true)
+    val searchBody = SimpleBooleanProperty(true)
+    val searchRecipients = SimpleBooleanProperty(true)
+
     var searchIsRunning = SimpleBooleanProperty(true)
 
 
@@ -34,23 +42,43 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
         form{
             fieldset{
                 field("Service Code"){
-                    textfield().bind(serviceCode)
+                    textfield(){
+                        bind(serviceCode)
+                    }
                 }
                 field("Username"){
-                    textfield().bind(username)
+                    textfield(){
+                        bind(username)
+                    }
                 }
                 field("Password"){
-                    passwordfield().bind(password)
+                    passwordfield(){
+                        bind(password)
+                    }
                 }
             }
 
-            fieldset{
+            fieldset("Search"){
                 field("Search Query"){
                     textfield().bind(searchQuery)
                 }
+                hbox{
+                    spacing=10.0
+                    paddingLeft = 125
+                    checkbox().bind(absoluteMatch)
+                    label("Absolute Match")
+                    checkbox().bind(caseSensitive)
+                    label("Case Sensitive")
+                    checkbox().bind(searchSubject)
+                    label("Search Subject")
+                    checkbox().bind(searchBody)
+                    label("Search Body")
+                    checkbox().bind(searchRecipients)
+                    label("Search Recipients")
+                }
             }
 
-            fieldset{
+            fieldset("Cache Settings"){
                 field("Cache Search Results"){
                     checkbox().bind(cacheResults)
                 }
@@ -77,6 +105,14 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
                             configuration.query = searchQuery.get()
                             configuration.useCache = useCache.get()
                             configuration.cacheResults = cacheResults.get()
+
+                            configuration.absoluteSearch = absoluteMatch.get()
+                            configuration.searchBody = searchBody.get()
+                            configuration.searchSubject = searchSubject.get()
+                            configuration.searchRecipients = searchRecipients.get()
+                            configuration.caseSensitive = caseSensitive.get()
+
+
                             controller.makeSearch(configuration)
                         }ui{ results:List<Message> ->
                             results.forEach{
@@ -119,7 +155,7 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
             columnResizePolicy = SmartResize.POLICY
             items = searchResults
 
-
+            vgrow = Priority.ALWAYS
 
             readonlyColumn("Message Guid", Message::messageGuid)
             //readonlyColumn("Box", Message::box)

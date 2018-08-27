@@ -6,7 +6,7 @@ import tornadofx.px
 class MasterStyle: Stylesheet() {
     init{
         root {
-            prefHeight = 600.px
+            prefHeight = 800.px
             prefWidth = 800.px
         }
     }
