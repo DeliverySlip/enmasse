@@ -23,6 +23,18 @@ class Executor {
             val useCache = configuration.useCache
             val cacheResults = configuration.cacheResults
 
+            val absoluteSearch = configuration.absoluteSearch
+            val searchBody = configuration.searchBody
+            val searchSubject = configuration.searchSubject
+            val searchRecipients = configuration.searchRecipients
+            val caseSensitive = configuration.caseSensitive
+
+            Searcher.SearchSettings.absoluteSearch = absoluteSearch
+            Searcher.SearchSettings.searchBody = searchBody
+            Searcher.SearchSettings.searchSubject = searchSubject
+            Searcher.SearchSettings.searchRecipients = searchRecipients
+            Searcher.SearchSettings.caseSensitive = caseSensitive
+
             val inboxList = ArrayList<Message>()
             val sentList = ArrayList<Message>()
             val draftList = ArrayList<Message>()

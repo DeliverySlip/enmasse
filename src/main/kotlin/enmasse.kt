@@ -35,6 +35,8 @@ fun printHelp(){
 
 fun main(params: Array<String>){
 
+    ServiceCodeResolver.setResolverUrl("https://devlab-api.betasabrina.com/api")
+
     val argParser = ArgParser(params)
 
     if(!argParser.keyExists("--NOGUI")){
