@@ -73,6 +73,12 @@ fun main(params: Array<String>){
         configuration.useCache = useCache
         configuration.cacheResults = cacheResults
 
+        configuration.caseSensitive = argParser.keyExists("--CASESENSITIVE")
+        configuration.absoluteSearch = argParser.keyExists("--ABSOLUTESEARCH")
+        configuration.searchRecipients = argParser.keyExists("--SEARCHRECIPIENTS")
+        configuration.searchBody = argParser.keyExists("--SEARCHBODY")
+        configuration.searchSubject = argParser.keyExists("--SEARCHSUBJECT")
+
         val searchResults = Executor.execute(configuration)
 
         println("Search Completed. Outputting Results")
