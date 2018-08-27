@@ -1,4 +1,5 @@
 import application.EnMasseApplication
+import application.models.Message
 import com.google.gson.Gson
 import com.securemessaging.sm.auth.ServiceCodeResolver
 import lib.*
@@ -62,9 +63,6 @@ fun main(params: Array<String>){
         val cacheResults = argParser.keyExists("--CACHERESULT")
         val useCache = argParser.keyExists("--USECACHE")
 
-        val jsonFilePath = "./output.json"
-        val csvFilePath = "./output.csv"
-
         val configuration = Configuration()
         configuration.serviceCode = serviceCode
         configuration.username = username
@@ -75,44 +73,40 @@ fun main(params: Array<String>){
 
         val searchResults = Executor.execute(configuration)
 
-        println("Search Completed. Printing Results")
+        println("Search Completed. Outputting Results")
         println("There Are ${searchResults.matchingMessages.size} Matching Results")
 
         when(OutputType.valueOf(outputType.toUpperCase())){
             OutputType.CONSOLE ->{
-                searchResults.matchingMessages.forEach{
-                    println("${it.messageGuid} | Subject: ${it.subject} | Body: ${it.body}")
+
+                val messages = ArrayList<application.models.Message>()
+                searchResults.matchingMessages.forEach {
+                    messages.add(Message(it.messageGuid, it.subject, it.body,
+                            it.to.joinToString(", "), it.cc.joinToString(", "),
+                            it.bcc.joinToString(", "), it.from.joinToString(", ")))
                 }
+
+                Exporter.exportToConsole(messages)
             }
             OutputType.CSV ->{
-                val headerData = "MessageGuid, Subject, Body"
-                val lineSeperator = "\n"
-                val delimiter = ","
-
-                val fileWriter = FileWriter(File(csvFilePath))
-                fileWriter.append(headerData)
-                fileWriter.append(lineSeperator)
-
-                searchResults.matchingMessages.forEach{
-                    fileWriter.append(it.messageGuid)
-                    fileWriter.append(delimiter)
-                    fileWriter.append(it.subject)
-                    fileWriter.append(delimiter)
-                    fileWriter.append(it.body)
-                    fileWriter.append(lineSeperator)
+                val messages = ArrayList<application.models.Message>()
+                searchResults.matchingMessages.forEach {
+                    messages.add(Message(it.messageGuid, it.subject, it.body,
+                            it.to.joinToString(", "), it.cc.joinToString(", "),
+                            it.bcc.joinToString(", "), it.from.joinToString(", ")))
                 }
 
-                fileWriter.flush()
-                fileWriter.close()
+                Exporter.exportToCSV(messages)
             }
             OutputType.JSON ->{
-                val gson = Gson()
-                val json = gson.toJson(searchResults.matchingMessages)
+                val messages = ArrayList<application.models.Message>()
+                searchResults.matchingMessages.forEach {
+                    messages.add(Message(it.messageGuid, it.subject, it.body,
+                            it.to.joinToString(", "), it.cc.joinToString(", "),
+                            it.bcc.joinToString(", "), it.from.joinToString(", ")))
+                }
 
-                val fileOutputStream = FileOutputStream(File(jsonFilePath))
-                fileOutputStream.write(json.toByteArray())
-                fileOutputStream.flush()
-                fileOutputStream.close()
+                Exporter.exportToJSON(messages)
             }
         }
 

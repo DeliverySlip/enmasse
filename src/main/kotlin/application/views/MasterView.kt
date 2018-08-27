@@ -4,8 +4,10 @@ import application.controllers.SearchController
 import application.models.Message
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
+import javafx.beans.value.ObservableBooleanValue
 import javafx.scene.paint.Color
 import lib.Configuration
+import lib.enum.OutputType
 import tornadofx.*
 import javax.swing.text.TableView
 import kotlin.concurrent.thread
@@ -22,6 +24,8 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
 
     val cacheResults = SimpleBooleanProperty(true)
     val useCache = SimpleBooleanProperty(false)
+
+    var searchIsRunning = SimpleBooleanProperty(true)
 
 
     private lateinit var tableView: javafx.scene.control.TableView<Message>
@@ -64,6 +68,7 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
                 button("Search"){
                     action{
                         runAsyncWithProgress{
+                            searchIsRunning.set(true)
                             searchResults.clear()
                             val configuration = Configuration()
                             configuration.password = password.get()
@@ -79,6 +84,31 @@ class MasterView: View("EnMasse - Bulk Secure Messaging Search") {
                             }
 
                             tableView.requestResize()
+                            searchIsRunning.set(false)
+                        }
+                    }
+                }
+            }
+            right{
+                style{
+                    paddingRight = 10
+                }
+                hbox{
+                    spacing = 20.0
+                    button("Export CSV"){
+                        disableWhen(searchIsRunning)
+                        action{
+                            runAsyncWithProgress {
+                                controller.exportData(OutputType.CSV, searchResults)
+                            }
+                        }
+                    }
+                    button("Export JSON"){
+                        disableWhen(searchIsRunning)
+                        action{
+                            runAsyncWithProgress {
+                                controller.exportData(OutputType.JSON, searchResults)
+                            }
                         }
                     }
                 }
