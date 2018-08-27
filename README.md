@@ -37,6 +37,35 @@ java -jar ./enmasse-1.0.0.jar --NOGUI --HELP
 ```
 This will print out the help information on how to use the search
 
+### Parameters
+The main required parameters allow the client to login and apply a search. The option `-o` parameter allows the client
+to specify the output format which can be either CONSOLE, JSON or CSV. By default this value is CONSOLE
+
+| Parameter         | Required | Description                                                                   |
+| ----------------- | -------- | ----------------------------------------------------------------------------- |
+| -s                | Y        | Specify the service code to search                                            |
+| -u                | Y        | Specify the username to login for the search                                  |
+| -p                | Y        | Specify the password to login for the search                                  |
+| -q                | Y        | Specify the search query string                                               |
+| -o                | N        | Specify the output format of the data. Default is CONSOLE which prints to console. Otherwise JSON will print to a .json file and CSV will output to a .csv |
+
+
+### Flags
+Various flags control how EnMasse operates, whetherto load the GUI, handle caching and configure its searching
+method:
+ 
+| Flag              | Description                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| --CACHERESULT     | Locally cache the searched messages to speed up future searches                          |
+| --USECACHE        | Use cache data instead of the API to make search                                         |
+| --CASESENSITIVE   | Search query is case sensitive                                                           |
+| --ABSOLUTESEARCH  | Word matching to query must be absolute. partial matches will be skipped                 |
+| --SEARCHRECIPIENTS| Check the search query for matches in the To, Cc, Bcc, and From fields                   |
+| --SEARCHBODY      | Check the query for matches in the body of the message                                   |
+| --SEARCHSUBJECT   | Check the query for matches in the subject of the message                                |
+| --NOGUI           | Load EnMasse in terminal mode. Without this flag the GUI will load                       |
+| --HELP            | Print this help information                                                              |
+
 # Cache Usage
 EnMasse has a simple caching mechanism where it serializes all of the emails it has fetched
 during its last search into a local file named `enmasse.cache.dat`. This file is generated

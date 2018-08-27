@@ -28,6 +28,11 @@ fun printHelp(){
     println("Flags:")
     println("\t--CACHERESULT\t\tLocally cache the searched messages to speed up future searches")
     println("\t--USECACHE\t\tUse cache data instead of the API to make search")
+    println("\t--CASESENSITIVE\t\tSearch query is case sensitive")
+    println("\t--ABSOLUTESEARCH\t\tWord matching to query must be absolute. partial matches will be skipped")
+    println("\t--SEARCHRECIPIENTS\t\tCheck the search query for matches in the To, Cc, Bcc, and From fields")
+    println("\t--SEARCHBODY\t\tCheck the query for matches in the body of the message")
+    println("\t--SEARCHSUBJECT\t\tCheck the query for matches in the subject of the message")
     println("\t--NOGUI\t\tLoad EnMasse in terminal mode. Without this flag the GUI will load")
     println("\t--HELP\t\tPrint this help information")
 }
